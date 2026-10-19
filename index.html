@@ -1,44 +1,579 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Assistant Emploi — Drummondville v3</title>
+<link rel="icon" href="data:," />
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--ink:#182230;--muted:#687586;--line:#e3e8ef;--accent:#2457d6;--accent2:#eaf0ff;--good:#147d53;--warn:#9a5a00;--bad:#b42318}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink)}header{background:#13233e;color:#fff;padding:24px max(18px,calc((100% - 1100px)/2));}header h1{margin:0;font-size:25px}header p{margin:5px 0 0;color:#d7e1f4}.wrap{max-width:1100px;margin:22px auto;padding:0 16px}.notice{padding:12px 14px;background:#fff7e6;border:1px solid #f2d49b;border-radius:12px;color:#704600;margin-bottom:16px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:4px}.layout{display:grid;grid-template-columns:320px 1fr;gap:16px}.panel h2{font-size:17px;margin:0 0 12px}.panel h3{font-size:15px;margin:15px 0 7px}label{display:block;font-weight:650;font-size:13px;margin:10px 0 4px}input,select,textarea{width:100%;padding:10px 11px;border:1px solid #cbd4e1;border-radius:9px;font:inherit;background:white;color:var(--ink)}textarea{min-height:95px;resize:vertical}.checks{display:grid;gap:7px}.checks label{display:flex;align-items:center;gap:8px;font-weight:500;margin:0}.checks input{width:auto}.btn{border:0;border-radius:9px;padding:10px 13px;background:var(--accent);color:white;font-weight:700;cursor:pointer}.btn.secondary{background:#eef2f7;color:#233047;border:1px solid var(--line)}.btn.danger{background:#fff0ee;color:#a3261c;border:1px solid #f0c6c0}.btn.small{padding:7px 9px;font-size:13px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.job{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#fff}.jobtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.job h3{margin:0;font-size:16px}.muted{color:var(--muted);font-size:13px}.pill{display:inline-block;padding:3px 8px;border-radius:20px;background:#eef2f7;font-size:12px;font-weight:700}.pill.good{background:#e5f6ed;color:#126b46}.pill.warn{background:#fff1d6;color:#805000}.score{font-weight:800;color:var(--accent)}.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed #c7d0dc;border-radius:12px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tab{background:#eef2f7;color:#28364b;border:0;border-radius:9px;padding:8px 11px;font-weight:700;cursor:pointer}.tab.active{background:var(--accent2);color:var(--accent)}.hidden{display:none}.footer{font-size:12px;color:var(--muted);margin:18px 0 30px}.sourcegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.sourcecard{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fff}.sourcecard strong{display:block;margin-bottom:4px}.sourcecard p{font-size:12px;color:var(--muted);margin:0 0 9px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.tagline{font-size:12px;color:var(--muted)}.approval{padding:10px;background:#f0f7ff;border:1px solid #cfe0ff;border-radius:9px;margin:10px 0;font-size:13px}@media(max-width:600px){.sourcegrid{grid-template-columns:1fr}.fieldgrid{grid-template-columns:1fr}}.draft{white-space:pre-wrap;background:#f7f9fc;border:1px solid var(--line);padding:12px;border-radius:9px;font-size:13px}.profileline{padding:10px;background:#f7f9fc;border-radius:9px;font-size:13px}.result-count{font-size:13px;color:var(--muted)}@media(max-width:800px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}header h1{font-size:21px}}
-</style></head>
-<body><header><h1>Assistant Emploi</h1><p>Drummondville · offres à partir de 18 $/h · validation avant candidature</p></header>
+:root{
+  --bg:#f5f7fb;--card:#fff;--ink:#182230;--muted:#687586;--line:#e3e8ef;
+  --accent:#2457d6;--accent2:#eaf0ff;--good:#147d53;--warn:#9a5a00;--bad:#b42318;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+  padding:18px;
+}
+header{max-width:1100px;margin:0 auto 18px}
+h1{margin:0;font-size:20px}
+.notice{max-width:1100px;margin:0 auto 12px;padding:12px;border-radius:8px;background:linear-gradient(90deg,var(--accent2),#fff);border:1px solid var(--line)}
+.wrap{max-width:1100px;margin:0 auto;display:block}
+.panel{background:var(--card);border:1px solid var(--line);padding:14px;border-radius:8px;margin-bottom:12px}
+.layout{display:flex;gap:14px;align-items:flex-start}
+aside{width:320px;flex-shrink:0}
+main{flex:1}
+label{display:block;margin-top:10px;font-weight:600}
+input[type="text"],input[type="number"],select,textarea{width:100%;padding:8px;border-radius:6px;border:1px solid var(--line);margin-top:6px}
+textarea{min-height:120px;white-space:pre-wrap}
+.btn{display:inline-block;padding:8px 10px;border-radius:6px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.small{padding:6px 8px;font-size:13px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.stats{display:flex;gap:8px;margin:12px 0}
+.stat{background:var(--card);padding:8px;border-radius:6px;border:1px solid var(--line);min-width:120px}
+.job{border:1px solid var(--line);padding:10px;border-radius:6px;margin-bottom:8px;background:#fff}
+.job h4{margin:0 0 6px}
+.muted{color:var(--muted);font-size:13px}
+.hidden{display:none}
+.flex-row{display:flex;gap:8px;align-items:center}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:var(--accent2);padding:4px 8px;border-radius:999px;font-size:12px}
+.footer{font-size:13px;color:var(--muted);margin-top:12px}
+.profileline{font-size:14px;color:var(--ink);margin-top:8px}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+.small-muted{font-size:12px;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:12px 0}
+kbd{background:#f0f4ff;border-radius:4px;padding:2px 6px;border:1px solid var(--line);font-family:monospace}
+</style>
+</head>
+<body>
+<header>
+  <h1>Assistant Emploi — Drummondville (v3)</h1>
+  <p class="muted">Trouve, sauvegarde et prépare tes candidatures · Rayon ≤ 20 km · Salaire min 18 $/h (si fourni)</p>
+</header>
+
+<div class="notice">
+  <strong>Important :</strong> rien n'est envoyé automatiquement sans votre approbation explicite. Cet assistant prépare des candidatures; vous contrôlez l'envoi.
+</div>
+
 <div class="wrap">
-<div class="notice"><strong>Version 3 — boîte de candidatures préparées :</strong> ouvre des recherches ciblées sur Indeed, Jobillico et Google pour les pages carrière, puis ajoute les annonces qui t'intéressent. Aucune candidature n'est envoyée depuis cette application. Les offres restent dans ce navigateur tant que tu n'exportes pas une sauvegarde.</div>
-<section class="panel" style="margin-bottom:16px"><h2>1. Lancer une recherche d'offres</h2><p class="muted">Les boutons ouvrent les résultats du site choisi dans un nouvel onglet. La recherche externe peut montrer des annonces hors rayon ou sans salaire : vérifie-les avant de les enregistrer.</p><label for="searchTerm">Mots-clés de recherche</label><input id="searchTerm" value="commis entrepôt OR commis de plancher OR service clientèle" placeholder="ex. commis d'entrepôt, conseiller électronique"><div class="toolbar"><button class="btn" id="searchIndeed">Rechercher sur Indeed</button><button class="btn" id="searchJobillico">Rechercher sur Jobillico</button><button class="btn secondary" id="searchGoogle">Chercher les pages carrière</button><button class="btn secondary" id="searchCanada">Chercher sur Guichet-Emplois</button></div><div class="sourcegrid"><div class="sourcecard"><strong>Indeed</strong><p>Recherche web préremplie autour de Drummondville.</p><span class="tagline">Source prioritaire</span></div><div class="sourcecard"><strong>Jobillico</strong><p>Recherche d'annonces par mots-clés et région.</p><span class="tagline">Source prioritaire</span></div><div class="sourcecard"><strong>Pages carrière</strong><p>Recherche Google limitée aux pages de recrutement des employeurs.</p><span class="tagline">Source prioritaire</span></div></div></section>
-<section class="panel" style="margin-bottom:16px"><h2>2. Trouver des offres à ajouter à ta file</h2><p class="muted">Lance les recherches par famille de postes. Quand une offre semble intéressante, copie son lien et sa description dans le formulaire. Les résultats restent sur les sites d’origine; cette page ne les aspire pas automatiquement.</p><div class="toolbar"><button class="btn secondary" onclick="quickSearch('entrepot')">Entrepôt / inventaire</button><button class="btn secondary" onclick="quickSearch('vente')">Commerce / vente</button><button class="btn secondary" onclick="quickSearch('electronique')">Informatique / électronique</button><button class="btn secondary" onclick="quickSearch('service')">Service clientèle</button></div><div class="approval"><strong>Pour que de nouvelles offres apparaissent pendant ton absence :</strong> il faudra héberger un petit service planifié qui recherche uniquement dans des sources autorisées, enregistre les annonces et prépare les brouillons. Indeed interdit l’utilisation de bots tiers pour postuler, et Jobillico interdit les robots qui parcourent son site pour collecter du contenu. La version locale ne prétend donc pas effectuer cette collecte en arrière-plan.</div></section>
-<div class="stats"><div class="stat"><small>Offres enregistrées</small><strong id="sTotal">0</strong></div><div class="stat"><small>À examiner</small><strong id="sReview">0</strong></div><div class="stat"><small>Approuvées</small><strong id="sApproved">0</strong></div><div class="stat"><small>Postulées</small><strong id="sSent">0</strong></div></div>
-<div class="layout"><aside class="panel"><h2>Ton profil et tes critères</h2><div class="profileline"><strong>Profil de départ</strong><br>Expérience en commerce de détail (RONA), scanner ZEBRA, conseil client, alimentation/restauration, réception et rangement de marchandises. Français et anglais courants. Intérêt pour l'informatique et la technologie.</div>
-<label for="distance">Distance maximale</label><select id="distance"><option>10</option><option selected>20</option><option>30</option><option>40</option><option>50</option></select>
-<label for="wage">Salaire minimum ($/h)</label><input id="wage" type="number" min="0" value="18">
-<label>Types d'emplois</label><div class="checks" id="categories"><label><input type="checkbox" value="Entrepôt" checked> Entrepôt / réception</label><label><input type="checkbox" value="Commerce et vente" checked> Commerce et vente</label><label><input type="checkbox" value="Informatique et électronique" checked> Informatique et électronique</label><label><input type="checkbox" value="Service à la clientèle" checked> Service à la clientèle</label></div>
-<label for="keywords">Mots-clés à privilégier (facultatif)</label><input id="keywords" placeholder="ex. inventaire, commis, électronique">
-<button class="btn" style="width:100%;margin-top:14px" id="savePrefs">Enregistrer les critères</button>
-<h3>Ajouter une offre manuellement</h3><form id="jobForm"><label for="title">Titre du poste *</label><input id="title" required placeholder="Ex. Commis d'entrepôt"><label for="company">Entreprise *</label><input id="company" required placeholder="Nom de l'entreprise"><label for="category">Catégorie *</label><select id="category"><option>Entrepôt</option><option>Commerce et vente</option><option>Informatique et électronique</option><option>Service à la clientèle</option></select><label for="salary">Salaire minimum offert ($/h)</label><input id="salary" type="number" min="0" placeholder="Laisser vide si inconnu"><label for="km">Distance (km)</label><input id="km" type="number" min="0" placeholder="Laisser vide si inconnue"><label for="url">Lien de l'offre</label><input id="url" type="url" placeholder="https://..."><label for="source">Source de l'offre</label><select id="source"><option>Indeed</option><option>Jobillico</option><option>Page carrière entreprise</option><option>Guichet-Emplois</option><option>Autre / inconnue</option></select><label for="description">Description / exigences</label><textarea id="description" placeholder="Colle ici le texte de l'annonce..."></textarea><button class="btn" type="submit" style="width:100%;margin-top:12px">Analyser et ajouter l'offre</button></form>
-</aside><main class="panel"><div class="toolbar"><button class="btn secondary small" id="exportData">Exporter sauvegarde JSON</button><button class="btn secondary small" id="importData">Importer sauvegarde</button><input id="importFile" type="file" accept="application/json,.json" class="hidden"></div><div class="tabs"><button class="tab active" data-tab="all">Toutes les offres</button><button class="tab" data-tab="review">À examiner</button><button class="tab" data-tab="ready">Préparées</button><button class="tab" data-tab="approved">Approuvées</button><button class="tab" data-tab="sent">Postulées</button></div><div class="row" style="justify-content:space-between"><h2 style="margin-bottom:0">Correspondances d'emploi</h2><span class="result-count" id="resultCount"></span></div><div class="muted" style="margin:6px 0 12px">Le score mesure la correspondance estimée avec ton profil. Un salaire ou une distance inconnus ne sont pas une confirmation : vérifie-les avant de postuler. Les candidatures restent à valider manuellement.</div><div id="jobs"></div>
-<div id="draftPanel" class="hidden" style="margin-top:18px"><h2>Préparer une candidature</h2><p class="muted">Brouillon à relire et adapter avant de l'envoyer. Rien n'est envoyé automatiquement.</p><label for="draftType">Document</label><select id="draftType"><option value="message">Message de candidature</option><option value="letter">Lettre de présentation courte</option></select><div class="draft" id="draftText"></div><div class="row" style="margin-top:10px"><button class="btn" id="copyDraft">Copier le brouillon</button><button class="btn secondary" id="closeDraft">Fermer</button></div></div>
-</main></div><div class="footer">Données stockées localement dans ce navigateur (localStorage). Utilise « Exporter sauvegarde JSON » pour en garder une copie et « Importer » pour la restaurer. Ne stocke pas de mot de passe ni de données sensibles. Cette version n’extrait pas automatiquement les annonces des sites et ne soumet pas de candidatures. Les sites peuvent limiter l’automatisation ; la prochaine étape fiable est une intégration officielle ou un flux d’offres autorisé.</div></div>
+  <section class="panel">
+    <h2>Vue d'ensemble</h2>
+    <p class="muted">Utilisez les boutons de recherche pour ouvrir des listes sur Indeed, Jobillico, Google et Guichet-Emplois. Importez votre CV PDF pour générer des candidatures personnalisées. Importez un fichier jobs.json (ou laissez un workflow GitHub Actions l'ajouter au dépôt) pour centraliser automatiquement les offres.</p>
+    <div class="stats">
+      <div class="stat"><small>Offres enregistrées</small><strong id="sTotal">0</strong></div>
+      <div class="stat"><small>À examiner</small><strong id="sReview">0</strong></div>
+      <div class="stat"><small>Brouillons préparés</small><strong id="sDrafts">0</strong></div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="panel">
+      <h2>Ton profil et critères</h2>
+      <div class="profileline" id="profileSummary">
+        Expériences connues : commis de plancher (RONA), lecteur ZEBRA, commis d'épicerie (Metro), cuisinier (pizza), aliments préparés (IGA). Français/anglais. Intérêt informatique.
+      </div>
+
+      <label for="distance">Distance maximale (km)</label>
+      <select id="distance"><option>10</option><option selected>20</option><option>30</option><option>40</option><option>50</option></select>
+
+      <label for="wage">Salaire minimum ($/h)</label>
+      <input id="wage" type="number" min="0" value="18">
+
+      <label>Types d'emplois</label>
+      <div class="checks" id="categories">
+        <label><input type="checkbox" value="Entrepôt" checked> Entrepôt / réception</label><br>
+        <label><input type="checkbox" value="Commerce et vente" checked> Commerce / vente / commis plancher</label><br>
+        <label><input type="checkbox" value="Informatique" checked> Informatique / électronique débutant</label><br>
+        <label><input type="checkbox" value="Service" checked> Service à la clientèle</label><br>
+        <label><input type="checkbox" value="Administratif" checked> Saisie / administratif</label>
+      </div>
+
+      <label for="keywords">Mots-clés à privilégier</label>
+      <input id="keywords" placeholder="ex. inventaire, commis, électronique">
+
+      <button class="btn" style="width:100%;margin-top:12px" id="savePrefs">Enregistrer les critères</button>
+
+      <hr>
+
+      <h3>Importer / gérer votre CV (PDF)</h3>
+      <p class="small-muted">L'extraction se fait dans votre navigateur. Le texte validé reste stocké localement (n'est pas publié).</p>
+      <input id="cvFile" type="file" accept="application/pdf">
+      <div style="margin-top:8px" class="controls">
+        <button class="btn small" id="extractCvBtn">Extraire le texte</button>
+        <button class="btn secondary small" id="removeCvBtn">Supprimer CV</button>
+      </div>
+      <div id="cvStatus" class="small-muted" style="margin-top:8px">Aucun CV importé.</div>
+      <label for="cvText">Texte extrait du CV (modifiez si nécessaire)</label>
+      <textarea id="cvText" placeholder="Texte du CV..." ></textarea>
+      <div style="margin-top:8px" class="controls">
+        <button class="btn" id="saveCv">Valider et enregistrer le CV</button>
+        <button class="btn secondary" id="downloadCv">Télécharger (local) .txt</button>
+      </div>
+
+      <hr>
+
+      <h3>Import/merge d'offres</h3>
+      <p class="small-muted">Importer un jobs.json (format attendu : {jobs:[...]}) ou récupérer /jobs.json du site (si présent dans le dépôt).</p>
+      <div class="controls" style="margin-top:6px">
+        <input id="jobsFile" type="file" accept="application/json">
+        <button class="btn small" id="importJobsFile">Importer fichier</button>
+      </div>
+      <div style="margin-top:8px" class="controls">
+        <button class="btn" id="fetchJobsJson">Importer /jobs.json depuis le site</button>
+        <button class="btn secondary" id="checkLinksBtn">Vérifier liens (limité par CORS)</button>
+      </div>
+      <small class="small-muted">Remarque : la vérification des liens peut échouer à cause de CORS ; le serveur d'origine doit autoriser vos requêtes.</small>
+
+    </aside>
+
+    <main class="panel">
+      <div class="toolbar">
+        <button class="btn secondary small" id="searchIndeed">Ouvrir recherche Indeed</button>
+        <button class="btn secondary small" id="searchJobillico">Ouvrir Jobillico</button>
+        <button class="btn secondary small" id="searchGoogle">Ouvrir Google</button>
+        <button class="btn secondary small" id="searchGuichet">Guichet-Emplois</button>
+        <div style="flex:1"></div>
+        <button class="btn secondary small" id="exportData">Exporter sauvegarde JSON</button>
+        <button class="btn small" id="clearAll">Réinitialiser localStorage</button>
+      </div>
+
+      <div style="margin-top:12px" class="panel">
+        <h2>Ajouter une offre manuellement</h2>
+        <form id="jobForm">
+          <label for="title">Titre du poste *</label>
+          <input id="title" required placeholder="Ex. Commis d'entrepôt">
+          <label for="company">Entreprise</label>
+          <input id="company" placeholder="Ex. Metro">
+          <label for="location">Lieu</label>
+          <input id="location" placeholder="Ex. Drummondville, QC">
+          <label for="salary">Salaire (si indiqué) $/h</label>
+          <input id="salary" type="number" min="0" placeholder="Ex. 18">
+          <label for="url">Lien original</label>
+          <input id="url" placeholder="https://...">
+          <label for="description">Description (facultative)</label>
+          <textarea id="description"></textarea>
+          <div style="margin-top:10px" class="controls">
+            <select id="category">
+              <option>Entrepôt</option><option>Commerce et vente</option><option>Informatique</option><option>Service</option><option>Administratif</option>
+            </select>
+            <button class="btn" type="submit">Ajouter</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="jobsList" style="margin-top:12px"></div>
+
+      <div id="draftPanel" class="panel hidden" style="margin-top:18px">
+        <h2>Préparer une candidature</h2>
+        <p class="muted">Brouillon à relire et adapter avant envoi. Rien n'est envoyé automatiquement.</p>
+        <div id="draftTarget"></div>
+        <label for="draftText">Lettre / message proposé</label>
+        <textarea id="draftText"></textarea>
+        <div class="controls" style="margin-top:8px">
+          <button class="btn" id="saveDraft">Enregistrer brouillon</button>
+          <button class="btn secondary" id="copyDraft">Copier dans le presse-papiers</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        Données stockées localement (localStorage). N'envoyez pas votre CV dans le dépôt. Pour automatiser l'ajout régulier d'offres, ajoutez un workflow GitHub Actions qui alimente jobs.json — instructions ci-dessous.
+      </div>
+    </main>
+  </div>
+</div>
+
+<hr>
+<section class="wrap panel">
+  <h3>Notes d'automatisation (GitHub Actions)</h3>
+  <p class="small-muted">GitHub Pages est statique : pour exécuter des recherches automatiques, utilisez un workflow GitHub Actions (fichier .github/workflows/fetch_jobs.yml) qui :
+  <ul>
+    <li>récupère des flux RSS autorisés (Google Alerts si secret JOB_ALERT_FEEDS existe),</li>
+    <li>scrape des pages autorisées ou utilise des APIs publiques gratuites,</li>
+    <li>ajoute les nouvelles offres à jobs.json dans le repo (commit automatique),</li>
+    <li>fait attention aux règles d'usage et au CORS ; évitez le scraping de sites qui l'interdisent.</li>
+  </ul>
+  Exemple minimal de workflow (à placer dans .github/workflows/fetch_jobs.yml) :
+  <pre class="small-muted" style="background:#fafafa;padding:8px;border-radius:6px;border:1px solid var(--line);">
+name: fetch-jobs
+on:
+  schedule:
+    - cron: '0 */4 * * *' # toutes les 4 heures
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch RSS feeds and update jobs.json
+        env:
+          JOB_ALERT_FEEDS: ${{ secrets.JOB_ALERT_FEEDS }}
+        run: |
+          # script shell/python/node pour récupérer des flux RSS et mettre à jour jobs.json
+          echo "Add your feed fetcher here; do NOT commit secrets in code."
+  </pre>
+  </p>
+  <p class="small-muted">Je fournis ce workflow comme exemple ; si vous voulez, je peux fournir un script Node.js/Python prêt à coller dans le workflow pour récupérer des flux RSS et générer jobs.json à partir du secret JOB_ALERT_FEEDS sans modifier vos secrets.</p>
+</section>
+
 <script>
-const KEY='assistantEmploiDrummondville_v3';let state={jobs:[],tab:'all',draftId:null,prefs:{distance:20,wage:18,categories:['Entrepôt','Commerce et vente','Informatique et électronique','Service à la clientèle'],keywords:''}};
-const $=id=>document.getElementById(id);async function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x)state={...state,...x,prefs:{...state.prefs,...(x.prefs||{})}}}catch(e){};try{const response=await fetch('./jobs.json',{cache:'no-store'});if(response.ok){const data=await response.json();const known=new Set(state.jobs.map(j=>(j.url||'').split('?')[0].replace(/\/$/,'').toLowerCase()).filter(Boolean));let added=0;for(const item of (data.jobs||[])){const k=(item.url||'').split('?')[0].replace(/\/$/,'').toLowerCase();if(k&&!known.has(k)){state.jobs.push(item);known.add(k);added++}}if(added){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}const notice=document.querySelector('.notice');if(notice&&data.updated_at){const d=new Date(data.updated_at);notice.innerHTML='<strong>Version 3 — collecte planifiée :</strong> dernière mise à jour du flux : '+d.toLocaleString('fr-CA')+'. '+(data.jobs||[]).length+' piste(s) candidate(s) reçue(s); '+added+' nouvelle(s) ajoutée(s) à cette session. Vérifie toujours le salaire, la distance et l’annonce originale avant de préparer une candidature. Aucune candidature n’est envoyée automatiquement.'}}}catch(e){}; $('distance').value=state.prefs.distance;$('wage').value=state.prefs.wage;$('keywords').value=state.prefs.keywords;document.querySelectorAll('#categories input').forEach(c=>c.checked=state.prefs.categories.includes(c.value));render()}
-function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}function safeUrl(s=''){try{const u=new URL(s);return ['http:','https:'].includes(u.protocol)?u.href:''}catch(e){return ''}}function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function score(j){let t=(j.title+' '+j.category+' '+j.description).toLowerCase(),n=0;const groups=[['entrepôt','inventaire','réception','marchandise','stock','préparateur','commis d’entrepôt','manutention'],['vente','magasin','commerce','conseiller','commis de plancher','détail','client'],['informatique','technologie','électronique','ordinateur','cellulaire','téléphone','support technique','zebra','scanner'],['service à la clientèle','client','accueil','service','conseiller','caisse']];const idx=state.prefs.categories.indexOf(j.category);if(idx>=0)n+=25;const keys=groups[idx>=0?idx:0]||[];n+=Math.min(45,keys.filter(k=>t.includes(k)).length*9);if(/français|anglais|bilingue/.test(t))n+=5;if(/formation fournie|aucune expérience/.test(t))n+=5;if(j.salary!==null&&j.salary!==undefined&&j.salary>=state.prefs.wage)n+=15;if(j.km!==null&&j.km!==undefined&&j.km<=state.prefs.distance)n+=10;const custom=state.prefs.keywords.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);n+=Math.min(10,custom.filter(k=>t.includes(k)).length*5);return Math.min(99,Math.round(n))}
-function matches(j){if(!state.prefs.categories.includes(j.category))return false;if(j.salary!=null&&j.salary<state.prefs.wage)return false;if(j.km!=null&&j.km>state.prefs.distance)return false;return true}
-function statusLabel(s){return ({review:'À examiner',ready:'Brouillon préparé',approved:'Approuvée pour envoi',sent:'Postulée',rejected:'Écartée',interview:'Entrevue'})[s]||s}
-function render(){let js=state.jobs; $('sTotal').textContent=js.length;$('sReview').textContent=js.filter(j=>['review','ready'].includes(j.status)).length;$('sApproved').textContent=js.filter(j=>j.status==='approved').length;$('sSent').textContent=js.filter(j=>['sent','interview'].includes(j.status)).length;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));let shown=js.filter(j=>state.tab==='all'||(state.tab==='review'&&j.status==='review')||(state.tab==='ready'&&j.status==='ready')||(state.tab==='approved'&&j.status==='approved')||(state.tab==='sent'&&['sent','interview'].includes(j.status))).sort((a,b)=>score(b)-score(a));$('resultCount').textContent=shown.length+' offre(s)';$('jobs').innerHTML=shown.length?shown.map(j=>{let sc=score(j),ok=matches(j);return `<article class="job"><div class="jobtop"><div><h3>${esc(j.title)}</h3><div class="muted">${esc(j.company)} · ${esc(j.category)} · ${esc(j.source||'Source inconnue')}</div></div><div class="score">${sc}%</div></div><div class="row" style="margin:9px 0"><span class="pill ${ok?'good':'warn'}">${ok?'Respecte les filtres':'À vérifier : filtre non respecté'}</span><span class="pill">${statusLabel(j.status)}</span>${j.salary!=null?`<span class="pill">${j.salary} $/h</span>`:'<span class="pill">Salaire inconnu</span>'}${j.km!=null?`<span class="pill">${j.km} km</span>`:''}</div>${j.description?`<p style="margin:8px 0">${esc(j.description.slice(0,280))}${j.description.length>280?'…':''}</p>`:''}<div class="row">${safeUrl(j.url)?`<a class="btn secondary small" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener noreferrer">Ouvrir l'offre ↗</a>`:''}<button class="btn small" onclick="prepare('${j.id}')">Préparer candidature</button>${j.status==='review'||j.status==='ready'?`<button class="btn secondary small" onclick="setStatus('${j.id}','approved')">Approuver</button>`:''}${j.status==='approved'?`<button class="btn small" onclick="setStatus('${j.id}','sent')">Marquer postulée</button>`:''}<button class="btn secondary small" onclick="setStatus('${j.id}','rejected')">Écarter</button><button class="btn danger small" onclick="removeJob('${j.id}')">Supprimer</button></div></article>`}).join(''):'<div class="empty">Aucune offre dans cette vue. Ajoute une offre en collant son annonce dans le formulaire à gauche.</div>';if(state.draftId){$('draftPanel').classList.remove('hidden');updateDraft()}else $('draftPanel').classList.add('hidden')}
-$('savePrefs').onclick=()=>{state.prefs.distance=Number($('distance').value);state.prefs.wage=Number($('wage').value||0);state.prefs.categories=[...document.querySelectorAll('#categories input:checked')].map(c=>c.value);state.prefs.keywords=$('keywords').value;save()};
-$('jobForm').onsubmit=e=>{e.preventDefault();const j={id:Date.now().toString(),title:$('title').value.trim(),company:$('company').value.trim(),category:$('category').value,salary:$('salary').value===''?null:Number($('salary').value),km:$('km').value===''?null:Number($('km').value),url:$('url').value.trim(),source:$('source').value,description:$('description').value.trim(),status:'review',created:new Date().toISOString()};state.jobs.push(j);e.target.reset();save();state.tab='review';render()};document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;render()});window.setStatus=(id,s)=>{const j=state.jobs.find(x=>x.id===id);if(j){j.status=s;save()}};window.removeJob=id=>{if(confirm('Supprimer cette offre ?')){state.jobs=state.jobs.filter(j=>j.id!==id);if(state.draftId===id)state.draftId=null;save()}};window.prepare=id=>{state.draftId=id;const j=state.jobs.find(x=>x.id===id);if(j&&j.status==='review')j.status='ready';save();state.tab='ready';render()};function updateDraft(){const j=state.jobs.find(x=>x.id===state.draftId);if(!j)return;const msg=$('draftType').value==='message'?`Bonjour,\n\nJe souhaite poser ma candidature pour le poste de ${j.title} chez ${j.company}. Mon expérience en commerce de détail, en service à la clientèle et en organisation de marchandises m'a permis de développer mon sens de l'organisation et mon efficacité en équipe. J'ai également utilisé un appareil de numérisation ZEBRA chez RONA et je m'intéresse aux outils informatiques et technologiques.\n\nJe serais heureux d'échanger avec vous au sujet du poste. Merci de votre temps et de votre considération.\n\nCordialement`:`Objet : Candidature — ${j.title}\n\nBonjour,\n\nJe vous présente ma candidature pour le poste de ${j.title} chez ${j.company}. Mes expériences en commerce de détail, en alimentation et en restauration m'ont appris à travailler efficacement, à collaborer avec une équipe et à maintenir un espace de travail organisé. Chez RONA, j'ai notamment utilisé un scanner ZEBRA et conseillé les clients. Je suis bilingue français-anglais et je m'intéresse à l'informatique et aux nouvelles technologies.\n\nJe souhaite mettre ces compétences à profit au sein de votre équipe et serais disponible pour discuter de ma candidature.\n\nMerci pour votre considération.\n\nCordialement`; $('draftText').textContent=msg}
-$('draftType').onchange=updateDraft;$('copyDraft').onclick=async()=>{try{await navigator.clipboard.writeText($('draftText').textContent);$('copyDraft').textContent='Copié !';setTimeout(()=>$('copyDraft').textContent='Copier le brouillon',1300)}catch(e){alert('Copie non disponible. Sélectionne le texte du brouillon et copie-le manuellement.')}};$('closeDraft').onclick=()=>{state.draftId=null;render()};
-function quickSearch(category){const terms={entrepot:'commis entrepôt inventaire réception marchandises',vente:'commis plancher conseiller vente commerce détail',electronique:'conseiller électronique cellulaire informatique support technique',service:'service à la clientèle agent accueil conseiller'};const term=terms[category]||'emploi';const urls=[ 'https://ca.indeed.com/jobs?q='+encodeURIComponent('('+term+') salaire 18')+'&l='+encodeURIComponent('Drummondville, QC')+'&radius=20', 'https://www.google.com/search?q='+encodeURIComponent('site:jobillico.com '+term+' Drummondville'), 'https://www.google.com/search?q='+encodeURIComponent('(site:careers OR site:carriere OR site:emplois OR site:jobs) '+term+' Drummondville') ];urls.forEach(u=>window.open(u,'_blank','noopener,noreferrer'))}
-function launchSearch(kind){const term=$('searchTerm').value.trim()||'emploi';const loc='Drummondville Québec';let url='';if(kind==='indeed')url='https://ca.indeed.com/jobs?q='+encodeURIComponent(term+' salaire 18')+'&l='+encodeURIComponent(loc)+'&radius=20';if(kind==='jobillico')url='https://www.jobillico.com/recherche-emploi?skwd='+encodeURIComponent(term)+'&scty=Drummondville';if(kind==='google')url='https://www.google.com/search?q='+encodeURIComponent('site:careers OR site:carriere OR site:jobs '+term+' Drummondville');if(kind==='canada')url='https://www.guichetemplois.gc.ca/jobsearch/jobsearch?searchstring='+encodeURIComponent(term)+'&locationstring=Drummondville';if(url)window.open(url,'_blank','noopener,noreferrer')}
-$('searchIndeed').onclick=()=>launchSearch('indeed');$('searchJobillico').onclick=()=>launchSearch('jobillico');$('searchGoogle').onclick=()=>launchSearch('google');$('searchCanada').onclick=()=>launchSearch('canada');
-$('exportData').onclick=()=>{const blob=new Blob([JSON.stringify({version:3,exportedAt:new Date().toISOString(),prefs:state.prefs,jobs:state.jobs},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='assistant-emploi-sauvegarde.json';a.click();URL.revokeObjectURL(a.href)};
-$('importData').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data.jobs)||!data.prefs)throw new Error('format');if(!confirm('Importer '+data.jobs.length+' offre(s) et remplacer les données actuelles ?'))return;state.jobs=data.jobs;state.prefs={...state.prefs,...data.prefs};save();load();alert('Sauvegarde importée.')}catch(err){alert('Fichier invalide ou format non reconnu.')}finally{e.target.value=''}};
-// A saved offer must be explicitly approved before it can be marked as applied.
-const originalSetStatus=window.setStatus;window.setStatus=(id,s)=>{const j=state.jobs.find(x=>x.id===id);if(!j)return;if(s==='sent'&&j.status!=='approved'){alert('Valide d’abord cette offre et vérifie les informations.');return}if(s==='sent'&&!confirm('As-tu réellement envoyé ta candidature sur le site de l’employeur ?'))return;originalSetStatus(id,s)};
-load();
-</script></body></html>
+/* ===========================
+   Configuration et stockage
+   =========================== */
+const KEY='assistantEmploiDrummondville_v3';
+let state={jobs:[],prefs:{distance:20,wage:18,categories:['Entrepôt','Commerce et vente','Informatique','Service','Administratif']},cvText:'',drafts:[]};
+
+const $=id=>document.getElementById(id);
+
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state));render();}
+function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s)state={...state,...s};}catch(e){/* ignore */}}
+loadState();
+
+/* ====== Utilitaires ====== */
+function nowId(){return Date.now().toString(36) + Math.random().toString(36).slice(2,7)}
+function safeUrl(u){try{const x=new URL(u);return x.href}catch(e){return ''}}
+function dedupeMerge(existing, incoming){
+  const map=new Map();
+  existing.forEach(j=>{
+    const key=j.url? j.url.trim() : (j.title+'|'+j.company).toLowerCase();
+    map.set(key, j);
+  });
+  incoming.forEach(j=>{
+    const key=j.url? j.url.trim() : (j.title+'|'+j.company).toLowerCase();
+    if(map.has(key)){
+      const ex=map.get(key);
+      map.set(key, {...ex,...j, id:ex.id, status:ex.status||ex.status});
+    } else {
+      map.set(key, {...j, id:j.id||nowId(), status:j.status||'new'});
+    }
+  });
+  return Array.from(map.values()).sort((a,b)=> (b.addedAt||0)-(a.addedAt||0));
+}
+
+/* ====== Rendering ====== */
+function countStatus(s){return state.jobs.filter(j=>j.status===s).length}
+function statusLabel(s){
+  return ({new:'Nouvelle offre',review:'À examiner',interesting:'Intéressante',ready:'Brouillon préparé',approved:'À approuver',sent:'Postulée',interview:'Entrevue',rejected:'Refusée',expired:'Expirée'})[s]||s;
+}
+
+function render(){
+  $('sTotal').textContent=state.jobs.length;
+  $('sReview').textContent=state.jobs.filter(j=>['review','new'].includes(j.status)).length;
+  $('sDrafts').textContent=state.jobs.filter(j=>j.status==='ready').length;
+  $('distance').value = state.prefs.distance || 20;
+  $('wage').value = state.prefs.wage || 0;
+  const list=$('jobsList'); list.innerHTML='';
+  if(state.jobs.length===0){ list.innerHTML='<p class="muted">Aucune offre enregistrée.</p>'; return; }
+  state.jobs.forEach(j=>{
+    const div=document.createElement('div'); div.className='job';
+    const title=document.createElement('h4'); title.textContent = j.title || '(Sans titre)';
+    const meta=document.createElement('div'); meta.className='small-muted';
+    meta.textContent = `${j.company||'Entreprise inconnue'} · ${j.location||''} ${j.salary? '· '+j.salary+' $/h':''} · ${statusLabel(j.status||'new')}`;
+    const desc=document.createElement('p'); desc.textContent = j.description || '';
+    const actions=document.createElement('div'); actions.className='controls';
+    const openBtn=document.createElement('button'); openBtn.className='btn secondary small'; openBtn.textContent='Ouvrir';
+    openBtn.onclick=()=>{ if(j.url) window.open(j.url,'_blank'); else alert('Pas de lien fourni'); };
+    const toReview=document.createElement('button'); toReview.className='btn small'; toReview.textContent='Marquer → À examiner';
+    toReview.onclick=()=>{ setStatus(j.id,'review'); }
+    const prepare=document.createElement('button'); prepare.className='btn secondary small'; prepare.textContent='Préparer candidature';
+    prepare.onclick=()=>{ prepareDraft(j.id); }
+    actions.appendChild(openBtn); actions.appendChild(toReview); actions.appendChild(prepare);
+    const sel=document.createElement('select'); sel.innerHTML = ['new','review','interesting','ready','approved','sent','interview','rejected','expired'].map(s=>`<option value="${s}" ${((j.status||'new')===s)?'selected':''}>${statusLabel(s)}</option>`).join('');
+    sel.onchange=()=>{ setStatus(j.id,sel.value); };
+    actions.appendChild(sel);
+    const dup=document.createElement('button'); dup.className='btn secondary small'; dup.textContent='Dupliquer (copie)';
+    dup.onclick=()=>{ const copy={...j, id:nowId(), status:'new'}; state.jobs.unshift(copy); saveState(); }
+    actions.appendChild(dup);
+    const rem=document.createElement('button'); rem.className='btn secondary small'; rem.textContent='Supprimer';
+    rem.onclick=()=>{ if(confirm('Supprimer cette offre ?')){ state.jobs = state.jobs.filter(x=>x.id!==j.id); saveState(); } };
+    actions.appendChild(rem);
+
+    div.appendChild(title); div.appendChild(meta); div.appendChild(desc); div.appendChild(actions);
+    list.appendChild(div);
+  });
+}
+
+/* ====== Prefs / Formes ====== */
+$('savePrefs').onclick = ()=>{
+  state.prefs.distance = Number($('distance').value);
+  state.prefs.wage = Number($('wage').value||0);
+  const cats=[...document.querySelectorAll('#categories input:checked')].map(i=>i.value);
+  state.prefs.categories = cats.length?cats:state.prefs.categories;
+  saveState();
+  alert('Préférences enregistrées.');
+}
+
+/* ====== Manual add ====== */
+$('jobForm').onsubmit = (e)=>{
+  e.preventDefault();
+  const j = {
+    id: nowId(),
+    title: $('title').value.trim() || '(Sans titre)',
+    company: $('company').value.trim(),
+    location: $('location').value.trim(),
+    salary: $('salary').value ? Number($('salary').value) : null,
+    url: safeUrl($('url').value.trim()),
+    description: $('description').value.trim(),
+    category: $('category').value,
+    status: 'new',
+    addedAt: Date.now()
+  };
+  state.jobs.unshift(j);
+  saveState();
+  $('jobForm').reset();
+};
+
+/* ====== Export / Import data ====== */
+$('exportData').onclick = ()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='assistantEmploi_backup.json'; a.click();
+}
+
+/* ====== Clear all (careful) ====== */
+$('clearAll').onclick = ()=>{
+  if(confirm('Réinitialiser toutes les données locales ? (Sauvegardez d’abord)')){ state={jobs:[],prefs:state.prefs||state.prefs,cvText:'',drafts:[]}; saveState(); }
+}
+
+/* ====== CV PDF extraction (PDF.js) ====== */
+let pdfjsLoaded=false;
+async function ensurePdfJs(){
+  if(pdfjsLoaded) return;
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js');
+  if(window.pdfjsLib) window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  pdfjsLoaded=true;
+}
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script'); s.src=src; s.onload=resolve; s.onerror=reject; document.head.appendChild(s);
+  });
+}
+
+$('extractCvBtn').onclick = async ()=>{
+  const f = $('cvFile').files[0];
+  if(!f){ alert('Choisissez d\'abord un fichier PDF.'); return; }
+  $('cvStatus').textContent = 'Extraction en cours... (dans le navigateur)';
+  try{
+    await ensurePdfJs();
+    const arrayBuf = await f.arrayBuffer();
+    const pdf = await window.pdfjsLib.getDocument({data:arrayBuf}).promise;
+    let fullText = '';
+    for(let p=1;p<=pdf.numPages;p++){
+      const page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(i=>i.str).join(' ');
+      fullText += pageText + '\n\n';
+    }
+    if(fullText.trim().length>20){
+      $('cvText').value = fullText.trim();
+      $('cvStatus').textContent = `Texte extrait (${Math.max(1,Math.min(999,fullText.trim().length))} caractères) — vérifiez et Enregistrez.`;
+    } else {
+      $('cvStatus').textContent = 'Aucun texte détecté : le PDF semble être un scan. Vous pouvez tenter l’OCR (nécessite Tesseract.js, lourd).';
+      if(confirm('Le PDF semble être un scan sans texte. Voulez-vous tenter l\'OCR (peut être lent et télécharger un gros script) ?')){
+        await doOcr(arrayBuf);
+      }
+    }
+  }catch(err){
+    console.error(err);
+    alert('Erreur lors de l\'extraction du PDF : ' + (err.message||err));
+    $('cvStatus').textContent = 'Extraction échouée.';
+  }
+};
+
+async function doOcr(arrayBuf){
+  if(!window.Tesseract){
+    $('cvStatus').textContent = 'Chargement de Tesseract.js (peut être lent)...';
+    await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js');
+  }
+  $('cvStatus').textContent = 'OCR en cours (cela peut prendre plusieurs dizaines de secondes)...';
+  try{
+    const pdf = await window.pdfjsLib.getDocument({data:arrayBuf}).promise;
+    let text='';
+    for(let p=1;p<=pdf.numPages;p++){
+      const page = await pdf.getPage(p);
+      const viewport = page.getViewport({scale:2});
+      const canvas = document.createElement('canvas'); canvas.width = viewport.width; canvas.height = viewport.height;
+      const ctx = canvas.getContext('2d');
+      await page.render({canvasContext:ctx,viewport}).promise;
+      const dataUrl = canvas.toDataURL('image/png');
+      const res = await Tesseract.recognize(dataUrl,'fra+eng',{logger:m=>console.log(m)});
+      text += res.data.text + '\n\n';
+    }
+    $('cvText').value = text.trim();
+    $('cvStatus').textContent = 'OCR terminé — vérifiez le texte et enregistrez.';
+  }catch(e){
+    console.error(e); alert('OCR échouée : ' + e.message);
+    $('cvStatus').textContent = 'OCR échouée';
+  }
+}
+
+$('saveCv').onclick = ()=>{
+  const txt = $('cvText').value.trim();
+  if(!txt){ if(!confirm('Le texte est vide. Supprimer le CV enregistré ?')) return; state.cvText=''; saveState(); $('cvStatus').textContent='Aucun CV importé.'; return; }
+  state.cvText = txt;
+  saveState();
+  $('cvStatus').textContent = 'CV enregistré localement.';
+}
+
+$('removeCvBtn').onclick = ()=>{
+  if(confirm('Supprimer le CV enregistré (local uniquement) ?')){ state.cvText=''; saveState(); $('cvText').value=''; $('cvStatus').textContent='Aucun CV importé.'; }
+}
+
+$('downloadCv').onclick = ()=>{
+  const b=new Blob([state.cvText||$('cvText').value||''],{type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='cv-extrait.txt'; a.click();
+}
+
+/* ====== Import jobs.json (fichier ou depuis /jobs.json) ====== */
+$('importJobsFile').onclick = ()=>$('jobsFile').click();
+$('jobsFile').onchange = async (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const txt = await f.text(); const obj = JSON.parse(txt);
+    if(!obj || !Array.isArray(obj.jobs) && !Array.isArray(obj)) {
+      if(Array.isArray(obj)) mergeJobs(obj);
+      else if(Array.isArray(obj.jobs)) mergeJobs(obj.jobs);
+      else alert('Format JSON non reconnu. Attendez un objet {jobs:[...]} ou un tableau d\'offres.');
+      return;
+    }
+    mergeJobs(obj.jobs || obj);
+  }catch(err){ alert('Lecture JSON échouée : '+err.message); }
+}
+
+$('fetchJobsJson').onclick = async ()=>{
+  try{
+    const resp = await fetch('/jobs.json', {cache:'no-cache'});
+    if(!resp.ok) { alert('Impossible de récupérer /jobs.json : HTTP '+resp.status); return; }
+    const j = await resp.json();
+    const arr = Array.isArray(j.jobs)?j.jobs:(Array.isArray(j)?j:j.jobs||[]);
+    mergeJobs(arr);
+  }catch(err){
+    alert('Erreur en récupérant /jobs.json : ' + (err.message||err));
+  }
+}
+
+function mergeJobs(arr){
+  const normalized = arr.map(it=>{
+    return {
+      id: it.id || nowId(),
+      title: it.title || it.jobTitle || it.poste || '',
+      company: it.company || it.employer || '',
+      location: it.location || it.lieu || '',
+      salary: it.salary || it.pay || null,
+      url: safeUrl(it.url||it.link||it.lien||''),
+      description: it.description || it.desc || '',
+      category: it.category || 'Autre',
+      status: it.status || 'new',
+      addedAt: it.addedAt || Date.now()
+    };
+  });
+  state.jobs = dedupeMerge(state.jobs, normalized);
+  saveState();
+  alert('Import terminé. Offres fusionnées et dédoublonnées.');
+}
+
+/* ====== Vérification liens (limites CORS) ====== */
+$('checkLinksBtn').onclick = async ()=>{
+  const list = state.jobs.slice(0,40);
+  for(const j of list){
+    if(!j.url) { j.linkOk = false; continue; }
+    try{
+      const r = await fetch(j.url, {method:'HEAD', mode:'cors'});
+      j.linkOk = r.ok;
+      j.lastChecked = Date.now();
+      if(!r.ok) j.status = 'expired';
+    }catch(e){
+      j.linkOk = null;
+      j.lastChecked = Date.now();
+    }
+  }
+  saveState();
+  alert('Vérification terminée (résultats limités par CORS). Les liens marqués "expired" ont code d\'erreur côté serveur ou HEAD a renvoyé non-ok.');
+}
+
+/* ====== Prepare draft from job + CV ====== */
+function prepareDraft(jobId){
+  const job = state.jobs.find(j=>j.id===jobId);
+  if(!job){ alert('Offre introuvable'); return; }
+  const cv = state.cvText || $('cvText').value || '';
+  const matches = [];
+  const textCV = cv.toLowerCase();
+  if(/zebra|scanner|code-?barre/.test(textCV)) matches.push('Utilisation de lecteur de codes-barres (ZEBRA)');
+  if(/commis|commis de plancher|rayon|stock|réception|inventaire/.test(textCV)) matches.push('Expérience en gestion de stocks et réception (Metro, RONA)');
+  if(/cuisinier|pizza|aliments préparés|restaura?nt/.test(textCV)) matches.push('Expérience en cuisine et préparation alimentaire (restaurant)');
+  if(/informatique|ordinateur|électronique|téléphonie/.test(textCV)) matches.push('Intérêt pour l\'informatique et l\'électronique');
+  if(matches.length===0) matches.push('Compétences générales en service à la clientèle et travail d’équipe.');
+
+  const sal = job.salary? (job.salary+' $/h') : 'Salaire non indiqué';
+  const letter = `Bonjour,\n\nJe me permets de vous proposer ma candidature pour le poste de "${job.title}" chez ${job.company||'votre entreprise'}, situé ${job.location||''}.\n\n${matches.length?('Points clés de mon profil correspondant au poste :\n- ' + matches.join('\n- ') + '\n\n') : ''}Je suis disponible pour un entretien et je peux commencer rapidement. ${job.salary ? ('Je suis intéressé par le poste au tarif proposé de '+sal+'.') : 'Le salaire indiqué n’apparaît pas; je suis ouvert à en discuter.'}\n\nVous pouvez consulter mon CV ci-joint (extrait local) et me contacter pour fixer un rendez-vous.\n\nCordialement,\n[Votre nom]\n`;
+
+  const draft = { id: nowId(), jobId: job.id, text: letter, createdAt: Date.now() };
+  state.drafts = (state.drafts||[]).filter(d=>d.jobId!==job.id);
+  state.drafts.unshift(draft);
+  setStatus(job.id,'ready',true);
+  $('draftPanel').classList.remove('hidden');
+  $('draftText').value = letter;
+  $('draftTarget').textContent = `Brouillon pour : ${job.title} — ${job.company||''}`;
+  saveState();
+}
+
+/* ====== Save draft edits ====== */
+$('saveDraft').onclick = ()=>{
+  const txt = $('draftText').value;
+  const draft = state.drafts[0];
+  if(!draft){ alert('Aucun brouillon actif.'); return; }
+  draft.text = txt;
+  draft.updatedAt = Date.now();
+  saveState();
+  alert('Brouillon enregistré localement.');
+}
+$('copyDraft').onclick = async ()=>{
+  try{
+    await navigator.clipboard.writeText($('draftText').value);
+    $('copyDraft').textContent='Copié !';
+    setTimeout(()=>$('copyDraft').textContent='Copier dans le presse-papiers',1500);
+  }catch(e){ alert('Impossible de copier : ' + e.message); }
+}
+
+/* ====== setStatus helper (preserve approval rule) ====== */
+function setStatus(id,s,skipSave){
+  const j = state.jobs.find(x=>x.id===id);
+  if(!j) return;
+  if(s==='sent' && j.status!=='approved'){ alert('Valide d’abord cette offre manuellement avant de la marquer comme postée.'); return; }
+  j.status = s;
+  if(!skipSave) saveState();
+}
+
+/* ====== Quick search buttons (open external sites) ====== */
+function launchSearch(site){
+  const term = encodeURIComponent($('keywords').value.trim()||'emploi');
+  const loc = encodeURIComponent('Drummondville Québec');
+  let url='';
+  if(site==='indeed') url = `https://ca.indeed.com/jobs?q=${term}&l=${loc}&radius=${$('distance').value||20}`;
+  if(site==='jobillico') url = `https://www.jobillico.com/emploi/search?q=${term}&where=${loc}`;
+  if(site==='google') url = `https://www.google.com/search?q=${term}+site:ca.indeed.com+OR+site:jobillico.com+OR+site:guichetemplois.gc.ca`;
+  if(site==='guichet') url = `https://guichetemplois.gc.ca/marche-du-travail/Recherche?motsCles=${term}&localite=${loc}`;
+  window.open(url,'_blank');
+}
+$('searchIndeed').onclick = ()=>launchSearch('indeed');
+$('searchJobillico').onclick = ()=>launchSearch('jobillico');
+$('searchGoogle').onclick = ()=>launchSearch('google');
+$('searchGuichet').onclick = ()=>launchSearch('guichet');
+
+/* ====== Load persisted CV into textarea at start ====== */
+$('cvText').value = state.cvText || '';
+$('cvStatus').textContent = state.cvText ? 'CV chargé localement.' : 'Aucun CV importé.';
+
+/* ====== Init render ====== */
+render();
+
+/* ====== Notes & limitations shown in console for transparency ====== */
+console.log('Assistant Emploi v3 chargé. Rappels :\n- Le CV reste local. Ne le publiez pas dans le dépôt.\n- La vérification automatique des liens peut être limitée par CORS (les serveurs doivent autoriser les requêtes).\n- Pour automatiser la collecte d\'offres, ajoutez un workflow GitHub Actions qui met à jour /jobs.json.');
+
+/* Expose state for debugging dans la console (optionnel) */
+window._assistantState = state;
+
+</script>
+</body>
+</html>
