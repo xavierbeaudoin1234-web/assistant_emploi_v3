@@ -1,5 +1,24 @@
 {
-  "updated_at": "2026-11-03T18:14:55.080073+00:00",
+  "updated_at": "2026-11-04T18:28:37.293263+00:00",
   "source": "Aggregated RSS",
-  "jobs": []
+  "jobs": [
+    {
+      "id": "feed-525388b0a8b7",
+      "title": "Conseiller (ère) principal(e) au marketing numérique - Cain Lamarre S.E.N.C.R.L. - Isarta",
+      "company": "À vérifier dans l'annonce",
+      "category": "Commerce et vente",
+      "salary": null,
+      "km": 1.0,
+      "url": "https://www.google.com/url?rct=j&sa=t&url=https://isarta.com/emplois/%3Fjob%3D122387&ct=ga&cd=CAIyHGQyMWJjODg2M2I4Yjk2ZDQ6Y29tOmZyOkNBOlI&usg=AOvVaw0SK8zdvBXt53gDMY31qsxe",
+      "source": "RSS",
+      "description": "... Drummondville , Gatineau, Saguenay, Rimouski, Rivière-du-Loup. Postuler, Favori, Partager. Publiée : 3/11/2026. Type d' emploi : Permanent Temps&nbsp;...",
+      "status": "review",
+      "created": "2026-11-04T18:28:36.462399+00:00",
+      "feedItem": true,
+      "salaryNeedsVerification": true,
+      "distanceNeedsVerification": false,
+      "linkStatusCode": 200,
+      "linkError": null
+    }
+  ]
 }
